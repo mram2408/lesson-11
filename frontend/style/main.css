@@ -1,0 +1,47 @@
+.main-menu{
+    nav ul {
+      list-style-type: none; /* Видаляє маркери списку */
+      padding: 0; /* Видаляє відступи */
+      margin: 0; /* Видаляє поля */
+      display: flex; /* Встановлює елементи списку в рядок */
+      justify-content: flex-start; /* Розподіляє елементи рівномірно */
+  }
+
+  nav ul li {
+      margin: 0 10px; /* Встановлює відступи між пунктами меню */
+  }
+
+  nav ul li a {
+      text-decoration: none; /* Видаляє підкреслення */
+      color: #000; /* Змінює колір тексту */
+      padding: 10px 20px; /* Додає відступи навколо тексту */
+  }
+
+  nav ul li a:hover {
+      background-color: #f0f0f0; /* Додає фон при наведенні миші */
+      border-radius: 5px; /* Робить кути округлими */
+  }
+  nav ul li a.active{
+    border-bottom: 2px solid #007bff;
+  }
+  }
+
+  .main-menu {
+    background-color: #f8f9fa;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .main-menu nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+  .main-menu nav ul li {
+    display: inline;
+  }
+  .main-menu nav ul li a {
+    text-decoration: none;
+    color: #007bff;
+  }

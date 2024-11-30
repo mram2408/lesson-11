@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Змінити дані користувача</title>
+    <!-- Підключення CSS для стилів -->
+    <link rel="stylesheet" href="../style/main.css" />
+    <!-- Підключення необхідних скриптів -->
+    <script src="../scripts/RequestManager.js"></script>
+    <script src="../scripts/ListDataManager.js"></script>
+    <script src="../scripts/settings.js"></script>
+    <script src="../scripts/HeaderManager.js"></script>
+    <script src="../scripts/UsersApiManager.js"></script>
+  </head>
+  <body>
+    <script>
+      // Використання класу HeaderManager для створення заголовка з меню
+      document.addEventListener("DOMContentLoaded", async () => {
+        new HeaderManager("products/list.html", menuItems);
+        // Функція, що виконується при завантаженні сторінки
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get("id"); // Отримання значення параметра 'id'
+        const user = await UsersApiManager.getById(userId);
+        console.log(user);
+
+        const username = document.querySelector("#username");
+        const email = document.querySelector("#email");
+
+        username.value = user.foundUser.username || "";
+        email.value = user.foundUser.email || "";
+      });
+    </script>
+    <h1>Змінити дані користувача</h1>
+    <label>
+      username
+      <input type="text" name="username" id="username" />
+    </label>
+    <label>
+      email
+      <input type="email" name="email" id="email" />
+    </label>
+    <button id="btn">Змінити</button>
+    <script>
+      // Функція, що виконується при завантаженні сторінки
+      window.onload = async function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get("id"); // Отримання значення параметра 'id'
+
+        const username = document.querySelector("#username");
+        const email = document.querySelector("#email");
+
+        const btn = document.querySelector("#btn");
+        btn.onclick = editUser;
+
+        async function editUser() {
+          await UsersApiManager.editUser(userId, {
+            username: username.value,
+            email: email.value,
+          });
+          window.location.href = "./list.html";
+        }
+      };
+    </script>
+  </body>
+</html>

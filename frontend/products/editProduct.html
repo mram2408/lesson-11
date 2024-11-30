@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Змінити дані про продукт</title>
+    <!-- Підключення CSS для стилів -->
+    <link rel="stylesheet" href="../style/main.css" />
+    <!-- Підключення необхідних скриптів -->
+    <script src="../scripts/RequestManager.js"></script>
+    <script src="../scripts/ListDataManager.js"></script>
+    <script src="../scripts/settings.js"></script>
+    <script src="../scripts/HeaderManager.js"></script>
+    <script src="../scripts/ProductsApiManager.js"></script>
+  </head>
+  <body>
+    <script>
+      // Використання класу HeaderManager для створення заголовка з меню
+      document.addEventListener("DOMContentLoaded", async () => {
+        new HeaderManager("products/list.html", menuItems);
+        // Функція, що виконується при завантаженні сторінки
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id"); // Отримання значення параметра 'id'
+        const product = await ProductsApiManager.getById(productId);
+        const title = document.querySelector("#title");
+        const description = document.querySelector("#description");
+        const price = document.querySelector("#price");
+        title.value = product.product.title || "";
+        description.value = product.product.description || "";
+        price.value = product.product.price || "";
+      });
+    </script>
+    <h1>Змінити дані про продукт</h1>
+    <label>
+      Назва
+      <input type="text" name="title" id="title" />
+    </label>
+    <label>
+      Опис
+      <input type="text" name="description" id="description" />
+    </label>
+    <label>
+      Ціна
+      <input type="number" name="price" id="price" />
+    </label>
+    <!-- <label>
+      Фото
+      <input type="file" name="image" id="image" />
+    </label> -->
+    <button id="btn">Змінити</button>
+    <script>
+      // Функція, що виконується при завантаженні сторінки
+      window.onload = async function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id"); // Отримання значення параметра 'id'
+        const title = document.querySelector("#title");
+        const description = document.querySelector("#description");
+        const price = document.querySelector("#price");
+        const btn = document.querySelector("#btn");
+        btn.onclick = editProduct;
+
+        async function editProduct() {
+          await ProductsApiManager.editProduct(productId, {
+            title: title.value,
+            description: description.value,
+            price: parseInt(price.value),
+          });
+          window.location.href = "./list.html";
+        }
+      };
+    </script>
+  </body>
+</html>
